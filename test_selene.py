@@ -1,11 +1,21 @@
-from selene import by, be
+from selene import by, be, have
 from selene.support.shared import browser
+from selene.support.shared.jquery_style import s
 
 url = "http://github.com"
-page = 'vmakhakhei?tab=repositories'
-repository = 'lsn_9_allure'
+repository = 'vmakhakhei/lsn_9_allure'
 
 def test_github():
     browser.open(url)
-    browser.element('.header-search-input').click().type('eroshenkoam/allure-example').press_enter()
+
+    s('.header-search-input').click()
+    s('.header-search-input').type(repository)
+    s('.header-search-input').submit()
+
+    s(by.link_text('vmakhakhei/lsn_9_allure')).click()
+
+    s('#issues-tab').click()
+
+    s(by.partial_text('#1')).should(be.visible)
+
 
